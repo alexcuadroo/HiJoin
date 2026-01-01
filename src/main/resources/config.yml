@@ -1,0 +1,35 @@
+# ═══════════════════════════════════════════════════════════
+# Configuración del Plugin HiJoin
+# ═══════════════════════════════════════════════════════════
+
+# Configuración del Título
+title:
+  # Texto principal del título
+  text: "¡Bienvenido, {player}!"
+  # Color del título (GOLD, LIGHT_PURPLE, AQUA, WHITE, RED, GREEN, BLUE, YELLOW, etc.)
+  color: "LIGHT_PURPLE"
+  # Estilos: BOLD, ITALIC, UNDERLINED, STRIKETHROUGH, OBFUSCATED
+  styles:
+    - "BOLD"
+
+# Configuración del Subtítulo
+subtitle:
+  # Texto del subtítulo
+  text: "✨ Que disfrutes tu estadía en el servidor ✨"
+  # Color del subtítulo
+  color: "AQUA"
+  # Estilos del subtítulo
+  styles:
+    - "ITALIC"
+
+# Configuración de tiempos (en milisegundos)
+timing:
+  # Tiempo de entrada (fade in)
+  fade-in: 500
+  # Tiempo que permanece visible
+  stay: 3000
+  # Tiempo de salida (fade out)
+  fade-out: 500
+
+# Mensaje en consola al conectar (dejar vacío para deshabilitar y reducir CPU si deseas)
+console-message: ""

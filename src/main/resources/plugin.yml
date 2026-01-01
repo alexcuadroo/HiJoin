@@ -1,0 +1,21 @@
+name: HiJoin
+version: 1.1.0
+api-version: 1.21
+main: com.hijoin.JoinTitlePlugin
+description: Muestra un título de bienvenida cuando un jugador se conecta al servidor
+authors:
+  - alexcuadro
+website: https://github.com/alexcuadroo/HiJoin
+
+commands:
+  hijoin:
+    description: Comando principal del plugin HiJoin
+    usage: /hijoin [reload|info]
+    aliases:
+      - hj
+    permission: hijoin.admin
+
+permissions:
+  hijoin.admin:
+    description: Permite usar comandos de administración de HiJoin
+    default: op
