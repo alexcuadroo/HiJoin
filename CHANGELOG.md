@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.1.0] - 2026-01-01
+
+### Added
+- Caché de colores para optimizar búsquedas repetidas
+- Validación de permisos en comando `/hijoin reload`
+- Documentación completa en README
+
+### Changed
+- Actualizada API a Paper 1.21
+- Mensajes de consola deshabilitados por defecto para ahorrar CPU
+- Mejoras en validación de listas vacías
+
+### Optimized
+- Reducción significativa de uso de CPU con caché de colores
+- Mejor manejo de iteraciones en estilos de texto
+
 ## [1.0.0] - 2026-01-01
 
 ### Added
