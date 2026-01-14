@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
 
 public class UpdateChecker {
@@ -65,26 +66,38 @@ public class UpdateChecker {
       HttpURLConnection connection = (HttpURLConnection) url.openConnection();
       connection.setRequestMethod("GET");
       connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
+      connection.setRequestProperty("User-Agent", plugin.getName() + "/" + plugin.getPluginMeta().getVersion());
       connection.setConnectTimeout(5000);
       connection.setReadTimeout(5000);
 
       int responseCode = connection.getResponseCode();
       if (responseCode == 200) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        StringBuilder response = new StringBuilder();
-        String line;
+        try (BufferedReader reader = new BufferedReader(
+            new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
+          StringBuilder response = new StringBuilder();
+          String line;
 
-        while ((line = reader.readLine()) != null) {
-          response.append(line);
+          while ((line = reader.readLine()) != null) {
+            response.append(line);
+          }
+
+          // Parsear la respuesta JSON
+          JsonObject jsonObject = JsonParser.parseString(response.toString()).getAsJsonObject();
+          if (!jsonObject.has("tag_name")) {
+            plugin.getLogger().warning("Respuesta de GitHub sin tag_name");
+            return null;
+          }
+          String tagName = jsonObject.get("tag_name").getAsString();
+          String normalized = normalizeTag(tagName);
+          if (normalized.isEmpty()) {
+            plugin.getLogger().warning("No se pudo interpretar la versión del tag: " + tagName);
+            return null;
+          }
+          return normalized;
         }
-        reader.close();
-
-        // Parsear la respuesta JSON
-        JsonObject jsonObject = JsonParser.parseString(response.toString()).getAsJsonObject();
-        String tagName = jsonObject.get("tag_name").getAsString();
-
-        // Remover la 'v' si existe (ej: v1.1.0 -> 1.1.0)
-        return tagName.startsWith("v") ? tagName.substring(1) : tagName;
+      } else {
+        plugin.getLogger()
+            .warning("GitHub API devolvió estado " + responseCode + ": " + connection.getResponseMessage());
       }
 
     } catch (Exception e) {
@@ -119,5 +132,19 @@ public class UpdateChecker {
     } catch (Exception e) {
       return false;
     }
+  }
+
+  private String normalizeTag(String rawTag) {
+    if (rawTag == null) {
+      return "";
+    }
+    String cleaned = rawTag.trim();
+    // Quitar prefijo v o V y un posible punto siguiente (ej: v1.2.0, v.1.2.0)
+    cleaned = cleaned.replaceFirst("^[vV]\\.?", "");
+    // Quitar punto inicial si queda (ej: .1.2.0)
+    while (cleaned.startsWith(".")) {
+      cleaned = cleaned.substring(1);
+    }
+    return cleaned;
   }
 }
