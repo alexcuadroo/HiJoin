@@ -1,5 +1,5 @@
 name: HiJoin
-version: 1.1.0
+version: 1.2.0
 api-version: 1.21
 main: com.hijoin.JoinTitlePlugin
 description: Muestra un título de bienvenida cuando un jugador se conecta al servidor

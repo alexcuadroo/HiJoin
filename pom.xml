@@ -7,7 +7,7 @@
 
     <groupId>com.hijoin</groupId>
     <artifactId>HiJoin</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 
     <name>HiJoin</name>
     <description>Plugin de título de bienvenida para Minecraft</description>
