@@ -2,6 +2,7 @@ package com.hijoin;
 
 import com.hijoin.commands.HiJoinCommand;
 import com.hijoin.listeners.PlayerJoinListener;
+import com.hijoin.utils.UpdateChecker;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class JoinTitlePlugin extends JavaPlugin {
@@ -20,6 +21,9 @@ public class JoinTitlePlugin extends JavaPlugin {
         getLogger().info("═══════════════════════════════════");
         getLogger().info("✓ Plugin HiJoin activado correctamente, usa /hijoin para más información");
         getLogger().info("═══════════════════════════════════");
+
+        // Verificar actualizaciones en GitHub
+        new UpdateChecker(this, "alexcuadroo", "HiJoin").checkForUpdates();
     }
 
     @Override
