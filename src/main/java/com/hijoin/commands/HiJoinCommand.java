@@ -40,7 +40,6 @@ public class HiJoinCommand implements CommandExecutor {
 
         if (args[0].equalsIgnoreCase("info")) {
             sender.sendMessage("§6═══════════════════════════════════");
-            sender.sendMessage("§eHiJoin v1.1.0");
             sender.sendMessage("§eMuestra títulos de bienvenida al conectar");
             sender.sendMessage("§eUsa /hijoin reload para recargar la configuración");
             sender.sendMessage("§6═══════════════════════════════════");
